@@ -17,3 +17,4 @@ pet_status/
 
 # 提示音：自带的是本机专有音频，不入库；用户自行放置（见 sounds/README.md）
 sounds/*.wav
+_release_notes.md
