@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+
+# 运行时状态（不应入库）
+pet_status/
+*.heartbeat
+
+# 提示音：自带的是本机专有音频，不入库；用户自行放置（见 sounds/README.md）
+sounds/*.wav
