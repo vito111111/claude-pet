@@ -1,5 +1,7 @@
 # Claude Code 桌面宠物 🧡
 
+简体中文 | [English](README.en.md)
+
 一只跟着 Claude Code 状态联动的方块像素小宠物。形象是 Claude Code 的橘色"火花"小人，
 **无论打开多少个 Claude Code 窗口，整个桌面只有这一只宠物**，它的状态是所有会话的聚合。
 
@@ -14,7 +16,7 @@
 
 ```powershell
 # 1) 克隆
-git clone https://github.com/<your-name>/claude-pet.git
+git clone https://github.com/vito111111/claude-pet.git
 cd claude-pet
 
 # 2) 先自测预览（不依赖 Claude Code，看几秒动画即可）
@@ -44,7 +46,7 @@ hooks 在**新的** Claude Code 会话才生效。`ensure_pet.ps1` 与 `hook_sta
 | 状态 | 触发 | 表现 |
 |------|------|------|
 | **工作中** working | 任意一个会话正在干活 | 橘色小人趴在键盘上"哒哒哒"打字 |
-| **完成提醒** done | 任意一个会话结束（Stop） | 小人由橘色 **变绿**、轻轻跳动 + ✓ 徽章，**冒泡弹出刚完成的窗口名**（取工作目录最后一段，如 `claude-pet 完成`）+ **钉钉"新消息"提示音**；保持 **5 秒**后回到 idle/working |
+| **完成提醒** done | 任意一个会话结束（Stop） | 小人由橘色 **变绿**、轻轻跳动 + ✓ 徽章，**冒泡弹出刚完成的窗口名**（取工作目录最后一段，如 `claude-pet 完成`）+ **完成提示音**；保持 **5 秒**后回到 idle/working |
 
 > 提示音：把任意 `.wav` 放成 `sounds\done.wav` 即可（仓库不附带音频，见 `sounds/README.md`）。
 > 若该文件不存在，会依次回退到系统 `tada.wav` → 合成提示音，因此不放也能正常运行。
@@ -81,15 +83,14 @@ hooks 在**新的** Claude Code 会话才生效。`ensure_pet.ps1` 与 `hook_sta
 | `Stop`             | `hook_status.py done`    | Claude 答完：变绿提醒 |
 | `SessionEnd`       | `hook_status.py end`     | 会话结束：移除宠物 |
 
-> 已自动合并进现有 settings.json（保留了原有的 claude-voice 启动 hook）。
+> 与已有 hooks 合并即可（若你已有其他 SessionStart hook，并列追加，勿覆盖）。
 
 ## 立即生效
 
 hooks 在**新的** Claude Code 会话才会触发。要在当前会话先看到效果，可手动启动一次：
 
 ```powershell
-Start-Process "C:\Users\megarobo-BJ\AppData\Local\Programs\Python\Python313\pythonw.exe" `
-  -ArgumentList "C:\Users\megarobo-BJ\claude-pet\pet.py"
+pythonw .\pet.py
 ```
 
 ## 开机自启（常驻）
@@ -100,9 +101,8 @@ Start-Process "C:\Users\megarobo-BJ\AppData\Local\Programs\Python\Python313\pyth
 pythonw.exe pet.py --resident
 ```
 
-- `--resident` **常驻模式**：取消「无会话 600 秒自动退出」，进程一直待命。
-- 没有任何 Claude 会话时，显示**一只晒太阳的"看家"宠物**（`__resident__`，墨镜+太阳伞）；
-  一旦有真实会话，看家宠物让位给各会话宠物，会话都结束后又回来。
+- `--resident` **常驻模式**：取消「无会话自动退出」，进程一直待命。
+- 非常驻模式下，最后一个会话关闭约 `NO_SESSION_EXIT_SEC`（120 秒）后进程自动退出，随 Claude Code 来去。
 - 单例端口 50573 保证常驻进程与 hook 临时拉起的进程不会重复（先占端口者存活）。
 
 快捷方式位置：`%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\ClaudePet.lnk`
@@ -117,7 +117,7 @@ pythonw.exe pet.py --resident
 ## 自测预览（不依赖 Claude Code）
 
 ```powershell
-python C:\Users\megarobo-BJ\claude-pet\pet.py --selftest
+python .\pet.py --selftest
 ```
 
 唯一一只宠物循环演示 working → done(带冒泡) → idle，约数秒后自动关闭。
@@ -126,4 +126,5 @@ python C:\Users\megarobo-BJ\claude-pet\pet.py --selftest
 
 - `DONE_HOLD_SEC = 5`   完成提醒(绿色+冒泡)保持多久后回到 idle/working
 - `FRAME_MS = 90`       动画速度
-- `NO_SESSION_EXIT_SEC = 600`  无会话多久后主程序自动退出（**仅非常驻模式**；`--resident` 下永不自退）
+- `NO_SESSION_EXIT_SEC = 120`  无会话多久后主程序自动退出（**仅非常驻模式**；`--resident` 下永不自退）
+- `IDLE_SOCCER_SEC = 60`  空闲多久后变出分身踢足球
