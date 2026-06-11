@@ -3,7 +3,12 @@
 一只跟着 Claude Code 状态联动的方块像素小宠物。形象是 Claude Code 的橘色"火花"小人，
 **无论打开多少个 Claude Code 窗口，整个桌面只有这一只宠物**，它的状态是所有会话的聚合。
 
+<p align="center">
+  <img src="assets/demo.gif" width="220" alt="Claude Code 桌面宠物：idle / working / done 三态演示">
+</p>
+
 > Windows · Python 3.9+ · 纯 tkinter 矢量绘制，**零图片素材、零第三方依赖**。
+> （上方演示 GIF 由 `python make_demo_gif.py` 用宠物自身的像素精灵离线渲染生成。）
 
 ## 快速开始
 
