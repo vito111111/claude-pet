@@ -18,3 +18,10 @@ pet_status/
 # 提示音：自带的是本机专有音频，不入库；用户自行放置（见 sounds/README.md）
 sounds/*.wav
 _release_notes.md
+
+# 健身引导：第三方版权素材（任天堂官网动作照），不入库，运行时本地生成/放置
+linefit/model_png/
+linefit/frames/
+
+# MediaPipe 模型文件较大，不入库（运行时按 linefit/README.md 下载）
+*.task
