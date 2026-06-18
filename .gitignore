@@ -25,3 +25,8 @@ linefit/frames/
 
 # MediaPipe 模型文件较大，不入库（运行时按 linefit/README.md 下载）
 *.task
+
+# 健身引导 QA 蒙太奇/临时图(含任天堂参考素材合成),不入库
+linefit/data/_tmp/
+linefit/data/*_montage.png
+linefit/data/qa_*.png
